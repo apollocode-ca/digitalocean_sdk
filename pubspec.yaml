@@ -1,7 +1,7 @@
 name: digitalocean
 description: An Sdk for the DigitalOcean API.
 version: 0.0.1
-homepage: https://apollocode.ca
+homepage: https://github.com/apollocode-ca/digitalocean_sdk
 
 environment:
   sdk: ">=2.18.4 <3.0.0"
