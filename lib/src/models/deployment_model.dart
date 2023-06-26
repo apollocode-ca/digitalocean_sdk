@@ -55,12 +55,12 @@ class Deployment {
     return Deployment(
       id: map['id'] ?? '',
       spec: AppSpec.fromMap(map['spec']),
-      services:
-          List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
-      phaseLastUpdatedAt:
-          DateTime.fromMillisecondsSinceEpoch(map['phase_last_updated_at']),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['created_at']),
-      updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updated_at']),
+      services: map['services'] == null
+          ? []
+          : List<Service>.from(map['services']?.map((x) => Service.fromMap(x))),
+      phaseLastUpdatedAt: DateTime.parse(map['phase_last_updated_at']),
+      createdAt: DateTime.parse(map['created_at']),
+      updatedAt: DateTime.parse(map['updated_at']),
     );
   }
 

@@ -8,7 +8,9 @@ class DigitalOcean {
 
   DigitalOcean({required this.oAuthToken}) {
     Config.init(oAuthToken);
-    apps =
-        AppsService(endpoint: '/v2.0/cards/', baseUrl: Config.instance.baseUrl);
+    apps = AppsService(
+        endpoint: '/v2/apps',
+        baseUrl: Config.instance.baseUrl,
+        oAuthToken: oAuthToken);
   }
 }

@@ -7,19 +7,20 @@ class AppsService extends ClientHttpService {
   AppsService({
     required super.baseUrl,
     required super.endpoint,
+    required super.oAuthToken,
   });
 
   Future<List<App>> list() async {
     return await http.get(Uri.parse('$baseUrl$endpoint'), headers: {
       'content-type': 'application/json',
-      'x-auth-token': oAuthToken ?? '',
+      'Authorization': 'Bearer $oAuthToken',
     }).then((response) async {
       switch (response.statusCode) {
         case 200:
           List undecodedApps = jsonDecode(response.body)['apps'];
           List<App> apps = [];
           for (var undecodedApp in undecodedApps) {
-            apps.add(App.fromJson(undecodedApp));
+            apps.add(App.fromMap(undecodedApp));
           }
           return apps;
         default:

@@ -56,7 +56,7 @@ class ServiceSpec {
       'instance_size_slug': instanceSizeSlug,
       'instance_count': instanceCount,
       'http_port': httpPort,
-      'routes': routes?.map((x) => x?.toMap())?.toList(),
+      'routes': routes?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -77,7 +77,8 @@ class ServiceSpec {
 
   String toJson() => json.encode(toMap());
 
-  factory ServiceSpec.fromJson(String source) => ServiceSpec.fromMap(json.decode(source));
+  factory ServiceSpec.fromJson(String source) =>
+      ServiceSpec.fromMap(json.decode(source));
 
   @override
   String toString() {

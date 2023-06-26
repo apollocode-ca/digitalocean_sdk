@@ -43,16 +43,22 @@ class AppSpec {
   factory AppSpec.fromMap(Map<String, dynamic> map) {
     return AppSpec(
       name: map['name'] ?? '',
-      services:
-          List<ServiceSpec>.from(map['services']?.map((x) => ServiceSpec.fromMap(x))),
+      services: map['services'] == null
+          ? []
+          : List<ServiceSpec>.from(
+              map['services']?.map((x) => ServiceSpec.fromMap(x))),
       region: map['region'],
-      domains: List<DomainSpec>.from(map['domains']?.map((x) => DomainSpec.fromMap(x))),
+      domains: map['domains'] == null
+          ? []
+          : List<DomainSpec>.from(
+              map['domains']?.map((x) => DomainSpec.fromMap(x))),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory AppSpec.fromJson(String source) => AppSpec.fromMap(json.decode(source));
+  factory AppSpec.fromJson(String source) =>
+      AppSpec.fromMap(json.decode(source));
 
   @override
   String toString() {

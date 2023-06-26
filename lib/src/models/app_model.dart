@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 
 import 'package:digitalocean/src/models/deployment_model.dart';
+import 'package:digitalocean/src/models/domain_model.dart';
 import 'package:digitalocean/src/models/region_model.dart';
 import 'package:digitalocean/src/models/specs/app_spec.dart';
 
@@ -22,7 +23,7 @@ class App {
   String? tierSlug;
   String? liveUrlBase;
   String? liveDomain;
-  List<String>? domains;
+  List<Domain>? domains;
   App({
     required this.id,
     required this.ownerUuid,
@@ -56,7 +57,7 @@ class App {
     String? tierSlug,
     String? liveUrlBase,
     String? liveDomain,
-    List<String>? domains,
+    List<Domain>? domains,
   }) {
     return App(
       id: id ?? this.id,
@@ -95,7 +96,7 @@ class App {
       'tier_slug': tierSlug,
       'live_url_base': liveUrlBase,
       'live_domain': liveDomain,
-      'domains': domains,
+      'domains': domains?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -105,10 +106,10 @@ class App {
       ownerUuid: map['owner_uuid'] ?? '',
       defaultIngress: map['default_ingress'],
       createdAt: map['created_at'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['created_at'])
+          ? DateTime.parse(map['created_at'].toString())
           : null,
       updatedAt: map['updated_at'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['updated_at'])
+          ? DateTime.parse(map['updated_at'].toString())
           : null,
       activeDeployment: map['active_deployment'] != null
           ? Deployment.fromMap(map['active_deployment'])
@@ -116,17 +117,20 @@ class App {
       pendingDeployment: map['pending_deployment'] != null
           ? Deployment.fromMap(map['pending_deployment'])
           : null,
-      progress: Map<String, dynamic>.from(map['progress']),
+      progress: map['progress'] == null
+          ? null
+          : Map<String, dynamic>.from(map['progress']),
       lastDeploymentCreatedAt: map['last_deployment_created_at'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-              map['last_deployment_created_at'])
+          ? DateTime.parse(map['last_deployment_created_at'].toString())
           : null,
       liveUrl: map['live_url'],
       region: map['region'] != null ? Region.fromMap(map['region']) : null,
       tierSlug: map['tier_slug'],
       liveUrlBase: map['live_url_base'],
       liveDomain: map['live_domain'],
-      domains: List<String>.from(map['domains']),
+      domains: map['domains'] == null
+          ? null
+          : List<Domain>.from(map['domains']?.map((x) => Domain.fromMap(x))),
     );
   }
 
