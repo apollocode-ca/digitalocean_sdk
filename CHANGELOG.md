@@ -1,3 +1,7 @@
+## 0.0.2
+
+- Basic fetching of existing apps on the App Platform
+
 ## 0.0.1
 
 - Initial version.
