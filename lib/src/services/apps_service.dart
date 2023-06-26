@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:digitalocean/src/models/app_entity.dart';
+import 'package:digitalocean/src/models/app_model.dart';
 import 'package:digitalocean/src/services/client_http_service.dart';
 import 'package:http/http.dart' as http;
 
