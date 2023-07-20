@@ -1,3 +1,7 @@
+## 0.0.3+2
+
+- Static site creation handling
+
 ## 0.0.3
 
 - Crud on Apps
