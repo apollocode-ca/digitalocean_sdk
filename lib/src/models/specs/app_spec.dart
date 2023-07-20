@@ -4,17 +4,21 @@ import 'package:collection/collection.dart';
 
 import 'package:digitalocean/src/models/specs/domain_spec.dart';
 import 'package:digitalocean/src/models/specs/service_spec.dart';
+import 'package:digitalocean/src/models/specs/static_site_spec.dart';
 
 class AppSpec {
   String name;
   List<ServiceSpec> services;
   String? region;
   List<DomainSpec> domains;
+  List<StaticSiteSpec>? staticSites;
+
   AppSpec({
     required this.name,
     required this.services,
     this.region,
     required this.domains,
+    this.staticSites,
   });
 
   AppSpec copyWith({
@@ -22,12 +26,14 @@ class AppSpec {
     List<ServiceSpec>? services,
     String? region,
     List<DomainSpec>? domains,
+    List<StaticSiteSpec>? staticSites,
   }) {
     return AppSpec(
       name: name ?? this.name,
       services: services ?? this.services,
       region: region ?? this.region,
       domains: domains ?? this.domains,
+      staticSites: staticSites ?? this.staticSites,
     );
   }
 
@@ -37,6 +43,7 @@ class AppSpec {
       'services': services.map((x) => x.toMap()).toList(),
       'region': region,
       'domains': domains.map((x) => x.toMap()).toList(),
+      'static_sites': staticSites?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -52,6 +59,10 @@ class AppSpec {
           ? []
           : List<DomainSpec>.from(
               map['domains']?.map((x) => DomainSpec.fromMap(x))),
+      staticSites: map['static_sites'] == null
+          ? []
+          : List<StaticSiteSpec>.from(
+              map['static_sites']?.map((x) => StaticSiteSpec.fromMap(x))),
     );
   }
 

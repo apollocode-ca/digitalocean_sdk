@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+import 'package:digitalocean/src/models/env_variable_model.dart';
 
 import 'package:digitalocean/src/models/git_infos_model.dart';
 import 'package:digitalocean/src/models/route_model.dart';
@@ -13,7 +14,9 @@ class ServiceSpec {
   String instanceSizeSlug;
   int instanceCount;
   int httpPort;
+  List<EnvVariableModel>? envs;
   List<Route>? routes;
+  
   ServiceSpec({
     required this.name,
     this.git,
@@ -23,6 +26,7 @@ class ServiceSpec {
     required this.instanceCount,
     required this.httpPort,
     this.routes,
+    this.envs,
   });
 
   ServiceSpec copyWith({
@@ -34,6 +38,7 @@ class ServiceSpec {
     int? instanceCount,
     int? httpPort,
     List<Route>? routes,
+    List<EnvVariableModel>? envs,
   }) {
     return ServiceSpec(
       name: name ?? this.name,
@@ -44,6 +49,7 @@ class ServiceSpec {
       instanceCount: instanceCount ?? this.instanceCount,
       httpPort: httpPort ?? this.httpPort,
       routes: routes ?? this.routes,
+      envs: envs ?? this.envs,
     );
   }
 
@@ -57,6 +63,7 @@ class ServiceSpec {
       'instance_count': instanceCount,
       'http_port': httpPort,
       'routes': routes?.map((x) => x.toMap()).toList(),
+      'envs': envs?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -71,6 +78,10 @@ class ServiceSpec {
       httpPort: map['http_port']?.toInt() ?? 0,
       routes: map['routes'] != null
           ? List<Route>.from(map['routes']?.map((x) => Route.fromMap(x)))
+          : null,
+      envs: map['envs'] != null
+          ? List<EnvVariableModel>.from(
+              map['envs']?.map((x) => EnvVariableModel.fromMap(x)))
           : null,
     );
   }

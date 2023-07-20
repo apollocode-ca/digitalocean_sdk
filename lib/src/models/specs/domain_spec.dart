@@ -2,13 +2,13 @@ import 'dart:convert';
 
 class DomainSpec {
   String domain;
-  String type;
-  String zone;
+  String? type;
+  String? zone;
   String minimumTlsVersion;
   DomainSpec({
     required this.domain,
-    required this.type,
-    required this.zone,
+    this.type,
+    this.zone,
     required this.minimumTlsVersion,
   });
 
